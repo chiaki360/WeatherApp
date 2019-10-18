@@ -14,10 +14,12 @@ class CityTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /*
         let items = ["Tokyo","Osaka","Kyoto", "Sapporo", "Kusatsu"]
         for item in items {
             cities.append(item)
         }
+        */
         print(cities)
 
         // Uncomment the following line to preserve selection between presentations
@@ -48,12 +50,13 @@ class CityTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
+    /*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
     }
-
+    */
+    
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

@@ -9,13 +9,20 @@
 import UIKit
 
 class ViewController: UITableViewController {
+    var cityDictionary = ["Japan": ["Tokyo","Osaka","Kyoto", "Sapporo", "Kusatsu"],
+                          "China": ["Beijing","Shanghai","Shenzhen","Dalian","Nanjing"],
+                          "South Korea": ["Seoul","Busan","Jeju"],
+                          "Indonesia": ["Jakarta","Semarang","Bali"],
+                          "Malaysia": ["Kuala Lumpur","Putra Jaya","Ipoh","Shah Alam","Kucing"]]
+    
     var countries = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let items = ["Japan","China","South Korea", "Indonesia", "Malaysia"]
-        for item in items {
+        readCities()
+        //let items = ["Japan","China","South Korea", "Indonesia", "Malaysia"]
+        let items = cityDictionary.keys
+        for item in items.sorted() {
             countries.append(item)
         }
         print(countries)
@@ -32,7 +39,12 @@ class ViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 1: try loading the "Detail" view controller and typecasting it to be DetailViewController
+        print("Creating CityTableView")
         if let vc = storyboard?.instantiateViewController(withIdentifier: "City") as? CityTableViewController {
+            print("CityTableView created.")
+            //vc.detailItem = petitions[indexPath.row]
+            let cityList = cityDictionary[countries[indexPath.row]]!
+            vc.cities = cityList.sorted()
             // 2: success! Set its selectedImage property
             //vc.selectedImage = countries[indexPath.row]
             
@@ -41,5 +53,21 @@ class ViewController: UITableViewController {
         }
     }
 
+    func readCities() {
+        if let path = Bundle.main.path(forResource: "city.list.json", ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let decoder = JSONDecoder()
+                
+                if let jsonCities = try? decoder.decode(Cities.self, from: data) {
+                    let cities = jsonCities.cities
+                    print(cities)
+                    tableView.reloadData()
+                }
+            } catch {
+                // handle error
+            }
+        }
+    }
 }
 
