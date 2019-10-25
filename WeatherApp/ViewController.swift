@@ -29,7 +29,7 @@ class ViewController: UITableViewController {
         for item in items.sorted() {
             countries.append(item)
         }
-        print(countries)
+        //print(countries)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,7 +73,7 @@ class ViewController: UITableViewController {
                 print("Numbr of cities = ", cities.count)
                 
                 for city in cities {
-                    print("Country:",city.country)
+                    //print("Country:",city.country)
                     var countryName = countriesCodeDict[city.country]
                     if countryName == nil {
                         countryName = city.country
@@ -107,7 +107,7 @@ class ViewController: UITableViewController {
                 let jsonCountries = try decoder.decode([String:String].self, from: data)
                 print("Decoing data.")
                 countriesCodeDict = jsonCountries
-                print("Numbr of cities = ", countriesCodeDict.count)
+                print("Number of countries = ", countriesCodeDict.count)
                 //print(countriesCodeDict)
                 
             } catch let error {
