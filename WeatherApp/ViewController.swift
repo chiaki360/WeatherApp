@@ -16,10 +16,12 @@ class ViewController: UITableViewController {
     //                      "Malaysia": ["Kuala Lumpur","Putra Jaya","Ipoh","Shah Alam","Kucing"]]
     var countryDict = [String:[City]]()
     var countries = [String]()
+    var countriesCodeDict = [String:String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Try to read cities from Json file.")
+        readCountry()
         readCities()
         //let items = ["Japan","China","South Korea", "Indonesia", "Malaysia"]
         //let items = cityDictionary.keys
@@ -47,7 +49,7 @@ class ViewController: UITableViewController {
             //vc.detailItem = petitions[indexPath.row]
             //let cityList = cityDictionary[countries[indexPath.row]]!
             let cityList = countryDict[countries[indexPath.row]]
-            vc.cities = cityList!
+            vc.cities = cityList!.sorted(by: {$0.name < $1.name})
             // 2: success! Set its selectedImage property
             //vc.selectedImage = countries[indexPath.row]
             
@@ -58,7 +60,7 @@ class ViewController: UITableViewController {
 
     func readCities() {
         print("readCities: Begin")
-        if let path = Bundle.main.path(forResource: "city.list", ofType: "json") {
+        if let path = Bundle.main.path(forResource: "current.city.list", ofType: "json") {
             print("Loading json file.")
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
@@ -71,13 +73,17 @@ class ViewController: UITableViewController {
                 print("Numbr of cities = ", cities.count)
                 
                 for city in cities {
-                    //print("Country:",city.country, city.name)
-                    var cityArr:[City]? = countryDict[city.country]
+                    print("Country:",city.country)
+                    var countryName = countriesCodeDict[city.country]
+                    if countryName == nil {
+                        countryName = city.country
+                    }
+                    var cityArr:[City]? = countryDict[countryName!]
                     if cityArr == nil {
-                        countryDict.updateValue([City](), forKey: city.country)
+                        countryDict.updateValue([city], forKey: countryName!)
                     } else {
                         cityArr?.append(city)
-                        countryDict.updateValue(cityArr!, forKey: city.country)
+                        countryDict.updateValue(cityArr!, forKey: countryName!)
                     }
                 }
                 
@@ -87,6 +93,28 @@ class ViewController: UITableViewController {
             }
         }
         print("readCities: End")
+    }
+    
+    func readCountry() {
+        print("readCountries: Begin")
+        if let path = Bundle.main.path(forResource: "ISO3166-1.alpha2", ofType: "json") {
+            print("Loading json file.")
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                print("Creating data.")
+                let decoder = JSONDecoder()
+                
+                let jsonCountries = try decoder.decode([String:String].self, from: data)
+                print("Decoing data.")
+                countriesCodeDict = jsonCountries
+                print("Numbr of cities = ", countriesCodeDict.count)
+                //print(countriesCodeDict)
+                
+            } catch let error {
+                print(error)
+            }
+        }
+        print("readCountries: End")
     }
 }
 
