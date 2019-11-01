@@ -14,7 +14,22 @@ class DetailViewController: UIViewController {
     var city : City?
     override func viewDidLoad() {
         super.viewDidLoad()
+
         cityNameLabel.text = city?.name
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?id=\(city?.id ?? 0)&appid=a260960c7268268a87ca30635e8f72bd"
+        print(urlString)
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+               // parse(json: data)
+                print(String(decoding: data, as: UTF8.self))
+                
+            } else {
+                showError()
+            }
+        } else {
+            showError()
+        }
+    
         // Do any additional setup after loading the view.
     }
 
@@ -27,5 +42,9 @@ class DetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    func showError() {
+        let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
 }
