@@ -16,7 +16,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
 
         cityNameLabel.text = city?.name
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?id=\(city?.id ?? 0)&appid=a260960c7268268a87ca30635e8f72bd"
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
         print(urlString)
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
