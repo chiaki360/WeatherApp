@@ -20,6 +20,8 @@ class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         print("Try to read cities from Json file.")
         readCountry()
         readCities()
