@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="WeatherApp" customModuleProvider="target">
             <connections>
                 <outlet property="cityNameLabel" destination="wfU-DT-Yd6" id="INr-SJ-buJ"/>
+                <outlet property="tempLabel" destination="jN8-sc-RP7" id="9Aw-0p-kcT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,8 +26,8 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jN8-sc-RP7">
-                    <rect key="frame" x="186" y="129.5" width="42" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jN8-sc-RP7">
+                    <rect key="frame" x="154" y="130" width="104" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -36,10 +37,10 @@
             <constraints>
                 <constraint firstItem="wfU-DT-Yd6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="SlV-FU-VRw"/>
                 <constraint firstItem="wfU-DT-Yd6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="Zsc-UM-5af"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jN8-sc-RP7" secondAttribute="trailing" constant="186" id="ccI-hx-KQd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jN8-sc-RP7" secondAttribute="trailing" constant="100" id="ccI-hx-KQd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wfU-DT-Yd6" secondAttribute="trailing" constant="10" id="kMW-Lc-IcU"/>
                 <constraint firstItem="jN8-sc-RP7" firstAttribute="top" secondItem="wfU-DT-Yd6" secondAttribute="bottom" constant="33" id="kPZ-eb-Co3"/>
-                <constraint firstItem="jN8-sc-RP7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="186" id="lZp-g1-K1B"/>
+                <constraint firstItem="jN8-sc-RP7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="100" id="lZp-g1-K1B"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="131.8840579710145" y="133.92857142857142"/>
