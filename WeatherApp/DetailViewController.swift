@@ -13,6 +13,12 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var cityNameLabel: UILabel!
     
     @IBOutlet weak var tempLabel: UILabel!
+    
+   
+    @IBOutlet weak var weathericon: UIImageView!
+    
+    @IBOutlet weak var pressureLabel: UILabel!
+    
     var city : City?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +36,21 @@ class DetailViewController: UIViewController {
                     
                     let weatherjson = try decoder.decode(WeatherJson.self, from: data)
                     print(weatherjson)
-                    tempLabel.text = String(describing: weatherjson.main.temp)
+                    tempLabel.text = String(format: "%.2f", weatherjson.main.temp-273.15)
+                    let iconname = weatherjson.weather[0].icon+".png"
+                    
+                    let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
+                    do {
+                        let data = try Data(contentsOf: url!)
+                        weathericon.image = UIImage(data: data)
+                        
+                    }catch let err {
+                        print("Error : \(err.localizedDescription)")
+                    }
+                    
+                    print("https://openweathermap.org/img/wn/"+iconname)
+                    
+                    pressureLabel.text = String(weatherjson.main.pressure)
                     
                 } else {
                     showError()
