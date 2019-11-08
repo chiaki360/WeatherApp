@@ -14,7 +14,6 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var tempLabel: UILabel!
     
-   
     @IBOutlet weak var weathericon: UIImageView!
     
     @IBOutlet weak var pressureLabel: UILabel!
@@ -36,7 +35,7 @@ class DetailViewController: UIViewController {
                     
                     let weatherjson = try decoder.decode(WeatherJson.self, from: data)
                     print(weatherjson)
-                    tempLabel.text = String(format: "%.2f", weatherjson.main.temp-273.15)
+                    tempLabel.text = String(format: "%.2f", weatherjson.main.temp-273.15)+"°C"
                     let iconname = weatherjson.weather[0].icon+".png"
                     
                     let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
