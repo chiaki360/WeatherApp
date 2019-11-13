@@ -29,10 +29,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="88" translatesAutoresizingMaskIntoConstraints="NO" id="K1l-Zd-Qcj">
-                    <rect key="frame" x="30" y="104" width="354" height="277"/>
+                    <rect key="frame" x="15" y="104" width="384" height="277"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="146" translatesAutoresizingMaskIntoConstraints="NO" id="dBH-Pz-CBQ">
-                            <rect key="frame" x="43" y="0.0" width="268" height="60"/>
+                            <rect key="frame" x="58" y="0.0" width="268" height="60"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="146" translatesAutoresizingMaskIntoConstraints="NO" id="8Tz-FJ-gUR">
                                     <rect key="frame" x="0.0" y="0.0" width="268" height="60"/>
@@ -55,7 +55,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="103" translatesAutoresizingMaskIntoConstraints="NO" id="epX-OF-Dyc">
-                            <rect key="frame" x="71" y="148" width="212.5" height="20.5"/>
+                            <rect key="frame" x="86" y="148" width="212.5" height="20.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pressure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQ9-iy-bLb">
                                     <rect key="frame" x="0.0" y="0.0" width="67.5" height="20.5"/>
@@ -72,7 +72,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="UJd-V6-RjJ">
-                            <rect key="frame" x="72" y="256.5" width="210.5" height="20.5"/>
+                            <rect key="frame" x="87" y="256.5" width="210.5" height="20.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D03-E5-L3l">
                                     <rect key="frame" x="0.0" y="0.0" width="68.5" height="20.5"/>
@@ -95,10 +95,10 @@
             <constraints>
                 <constraint firstItem="wfU-DT-Yd6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="SlV-FU-VRw"/>
                 <constraint firstItem="wfU-DT-Yd6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="Zsc-UM-5af"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="K1l-Zd-Qcj" secondAttribute="trailing" constant="30" id="eCd-6q-phn"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="K1l-Zd-Qcj" secondAttribute="trailing" constant="15" id="eCd-6q-phn"/>
                 <constraint firstItem="K1l-Zd-Qcj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="60" id="eYS-W8-40J"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wfU-DT-Yd6" secondAttribute="trailing" constant="10" id="kMW-Lc-IcU"/>
-                <constraint firstItem="K1l-Zd-Qcj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="vYK-iI-px5"/>
+                <constraint firstItem="K1l-Zd-Qcj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="vYK-iI-px5"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="131.8840579710145" y="133.92857142857142"/>
