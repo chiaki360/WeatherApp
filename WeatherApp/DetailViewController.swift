@@ -18,6 +18,8 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var pressureLabel: UILabel!
     
+    @IBOutlet weak var humidityLabel: UILabel!
+    
     var city : City?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +45,13 @@ class DetailViewController: UIViewController {
                         let data = try Data(contentsOf: url!)
                         weathericon.image = UIImage(data: data)
                         
-                    }catch let err {
+                    } catch let err {
                         print("Error : \(err.localizedDescription)")
                     }
-                    
-                    print("https://openweathermap.org/img/wn/"+iconname)
-                    
+    
                     pressureLabel.text = String(weatherjson.main.pressure)
+                    
+                    humidityLabel.text = String(weatherjson.main.humidity)
                     
                 } else {
                     showError()
