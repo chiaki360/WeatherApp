@@ -37,7 +37,7 @@ class DetailViewController: UIViewController {
                     
                     let weatherjson = try decoder.decode(WeatherJson.self, from: data)
                     print(weatherjson)
-                    tempLabel.text = String(format: "%.2f", weatherjson.main.temp-273.15)+"°C"
+                    tempLabel.text = String(format: "%.2f", weatherjson.main.temp-273.15)+" °C"
                     let iconname = weatherjson.weather[0].icon+".png"
                     
                     let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
@@ -49,9 +49,9 @@ class DetailViewController: UIViewController {
                         print("Error : \(err.localizedDescription)")
                     }
     
-                    pressureLabel.text = String(weatherjson.main.pressure)
+                    pressureLabel.text = String(weatherjson.main.pressure) + " hPa"
                     
-                    humidityLabel.text = String(weatherjson.main.humidity)
+                    humidityLabel.text = String(weatherjson.main.humidity) + " %"
                     
                 } else {
                     showError()
