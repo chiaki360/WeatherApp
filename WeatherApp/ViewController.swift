@@ -17,10 +17,22 @@ class ViewController: UITableViewController {
     //                      "South Korea": ["Seoul","Busan","Jeju"],
     //                      "Indonesia": ["Jakarta","Semarang","Bali"],
     //                      "Malaysia": ["Kuala Lumpur","Putra Jaya","Ipoh","Shah Alam","Kucing"]]
+    
     var countryDict = [String:[City]]()
     var countries = [String]()
     var countriesCodeDict = [String:String]()
 
+    var filteredCountries: [String] = []
+
+    var isSearchBarEmpty: Bool {
+      return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    var isFiltering: Bool {
+      return searchController.isActive && !isSearchBarEmpty
+    }
+    let searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,17 +47,39 @@ class ViewController: UITableViewController {
             countries.append(item)
         }
         //print(countries)
+        
+        // 1
+        searchController.searchResultsUpdater = self
+        // 2
+        searchController.obscuresBackgroundDuringPresentation = false
+        // 3
+        searchController.searchBar.placeholder = "Search Countries"
+        // 4
+        navigationItem.searchController = searchController
+        // 5
+        definesPresentationContext = true
+        
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+          return filteredCountries.count
+        }
         return countries.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Country", for: indexPath)
-        cell.textLabel?.text = countries[indexPath.row]
+        let country: String
+        if isFiltering {
+            country = filteredCountries[indexPath.row]
+        } else {
+            country = countries[indexPath.row]
+        }
+        cell.textLabel?.text = country
         return cell
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 1: try loading the "Detail" view controller and typecasting it to be DetailViewController
         print("Creating CityTableView")
@@ -53,7 +87,13 @@ class ViewController: UITableViewController {
             print("CityTableView created.")
             //vc.detailItem = petitions[indexPath.row]
             //let cityList = cityDictionary[countries[indexPath.row]]!
-            let cityList = countryDict[countries[indexPath.row]]
+            let country: String
+            if isFiltering {
+                country = filteredCountries[indexPath.row]
+            } else {
+                country = countries[indexPath.row]
+            }
+            let cityList = countryDict[country]
             vc.cities = cityList!.sorted(by: {$0.name < $1.name})
             // 2: success! Set its selectedImage property
             //vc.selectedImage = countries[indexPath.row]
@@ -121,5 +161,19 @@ class ViewController: UITableViewController {
         }
         print("readCountries: End")
     }
+
+    func filterContentForSearchText(_ searchText: String) {
+      filteredCountries = countries.filter { (country: String) -> Bool in
+        return country.lowercased().contains(searchText.lowercased())
+      }
+      
+      tableView.reloadData()
+    }
 }
 
+extension ViewController: UISearchResultsUpdating {
+  func updateSearchResults(for searchController: UISearchController) {
+    let searchBar = searchController.searchBar
+    filterContentForSearchText(searchBar.text!)
+  }
+}
