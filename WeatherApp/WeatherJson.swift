@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherJson: Codable {
+struct CurrentWeather: Codable {
     var weather: [Weather]
     var main: Main
 }
@@ -26,4 +26,21 @@ struct Main: Codable {
     var humidity: Int
     var temp_min: Float
     var temp_max: Float
+}
+
+struct HourlyWeather: Codable {
+    var list: [List]
+    
+}
+
+struct List: Codable {
+    var dt: Int
+    var main: Main
+    var weather: [Weather]
+    var wind: Wind
+}
+
+struct Wind: Codable {
+    var speed: Float
+    var deg: Float
 }

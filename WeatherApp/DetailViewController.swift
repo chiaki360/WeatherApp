@@ -35,10 +35,10 @@ class DetailViewController: UIViewController {
                     
                     let decoder = JSONDecoder()
                     
-                    let weatherjson = try decoder.decode(WeatherJson.self, from: data)
-                    print(weatherjson)
-                    tempLabel.text = String(format: "%.2f", weatherjson.main.temp-273.15)+" °C"
-                    let iconname = weatherjson.weather[0].icon+".png"
+                    let currentWeather = try decoder.decode(CurrentWeather.self, from: data)
+                    print(currentWeather)
+                    tempLabel.text = String(format: "%.2f", currentWeather.main.temp-273.15)+" °C"
+                    let iconname = currentWeather.weather[0].icon+".png"
                     
                     let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
                     do {
@@ -48,10 +48,10 @@ class DetailViewController: UIViewController {
                     } catch let err {
                         print("Error : \(err.localizedDescription)")
                     }
-    
-                    pressureLabel.text = String(weatherjson.main.pressure) + " hPa"
                     
-                    humidityLabel.text = String(weatherjson.main.humidity) + " %"
+                    pressureLabel.text = String(currentWeather.main.pressure) + " hPa"
+                    
+                    humidityLabel.text = String(currentWeather.main.humidity) + " %"
                     
                 } else {
                     showError()
@@ -62,6 +62,46 @@ class DetailViewController: UIViewController {
         } else {
             showError()
         }
+        
+        let urlString1 = "https://api.openweathermap.org/data/2.5/forecast?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        print(urlString1)
+        if let url = URL(string: urlString1) {
+            do {
+                if let data = try? Data(contentsOf: url) {
+                    // parse(json: data)
+                    print(String(decoding: data, as: UTF8.self))
+                    
+                    let decoder = JSONDecoder()
+                    
+                    let hourlyWeather = try decoder.decode(HourlyWeather.self, from: data)
+                    print(hourlyWeather)
+                    /*
+                    tempLabel.text = String(format: "%.2f", hourlyWeather.main.temp-273.15)+" °C"
+                    let iconname = hourlyWeather.weather[0].icon+".png"
+                    
+                    let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
+                    do {
+                        let data = try Data(contentsOf: url!)
+                        weathericon.image = UIImage(data: data)
+                        
+                    } catch let err {
+                        print("Error : \(err.localizedDescription)")
+                    }
+                    
+                    pressureLabel.text = String(currentWeather.main.pressure) + " hPa"
+                    
+                    humidityLabel.text = String(currentWeather.main.humidity) + " %"
+                    */
+                } else {
+                    showError()
+                }
+            } catch let error {
+                print(error)
+            }
+        } else {
+            showError()
+        }
+        
         
         // Do any additional setup after loading the view.
     }
