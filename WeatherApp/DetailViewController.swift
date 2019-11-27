@@ -20,6 +20,8 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var humidityLabel: UILabel!
     
+    
+    @IBOutlet weak var hScrollView: UIScrollView!
     var city : City?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,22 +78,22 @@ class DetailViewController: UIViewController {
                     let hourlyWeather = try decoder.decode(HourlyWeather.self, from: data)
                     print(hourlyWeather)
                     /*
-                    tempLabel.text = String(format: "%.2f", hourlyWeather.main.temp-273.15)+" °C"
-                    let iconname = hourlyWeather.weather[0].icon+".png"
-                    
-                    let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
-                    do {
-                        let data = try Data(contentsOf: url!)
-                        weathericon.image = UIImage(data: data)
-                        
-                    } catch let err {
-                        print("Error : \(err.localizedDescription)")
-                    }
-                    
-                    pressureLabel.text = String(currentWeather.main.pressure) + " hPa"
-                    
-                    humidityLabel.text = String(currentWeather.main.humidity) + " %"
-                    */
+                     tempLabel.text = String(format: "%.2f", hourlyWeather.main.temp-273.15)+" °C"
+                     let iconname = hourlyWeather.weather[0].icon+".png"
+                     
+                     let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
+                     do {
+                     let data = try Data(contentsOf: url!)
+                     weathericon.image = UIImage(data: data)
+                     
+                     } catch let err {
+                     print("Error : \(err.localizedDescription)")
+                     }
+                     
+                     pressureLabel.text = String(currentWeather.main.pressure) + " hPa"
+                     
+                     humidityLabel.text = String(currentWeather.main.humidity) + " %"
+                     */
                 } else {
                     showError()
                 }
@@ -102,6 +104,39 @@ class DetailViewController: UIViewController {
             showError()
         }
         
+        NSLayoutConstraint.activate([
+            hScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            hScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            
+        ])
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.spacing = 10
+        stackView.distribution = .fill
+        hScrollView.addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            // Attaching the content's edges to the scroll view's edges
+            stackView.leadingAnchor.constraint(equalTo: hScrollView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: hScrollView.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: hScrollView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: hScrollView.bottomAnchor),
+            
+            // Satisfying size constraints
+            
+            stackView.heightAnchor.constraint(equalTo: hScrollView.heightAnchor)
+        ])
+        for i in 0...20 {
+            
+            // Label (has instrinsic content size)
+            let label = UILabel()
+            label.backgroundColor = .orange
+            label.text = "\(i)."
+            label.textAlignment = .center
+            stackView.addArrangedSubview(label)
+        }
         
         // Do any additional setup after loading the view.
     }
