@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -92,25 +92,23 @@
                         </stackView>
                     </subviews>
                 </stackView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zg-jj-i3V">
-                    <rect key="frame" x="16" y="367" width="344" height="264"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zg-jj-i3V">
+                    <rect key="frame" x="16" y="295" width="344" height="459"/>
                     <viewLayoutGuide key="contentLayoutGuide" id="LZN-w5-8v7"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="HzD-SI-i1X"/>
                 </scrollView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X2q-VU-4WV">
-                    <rect key="frame" x="68" y="639" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="0zg-jj-i3V" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="QH6-xq-Lsz"/>
                 <constraint firstItem="wfU-DT-Yd6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="SlV-FU-VRw"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0zg-jj-i3V" secondAttribute="trailing" constant="15" id="Ubk-os-Qe3"/>
                 <constraint firstItem="wfU-DT-Yd6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="Zsc-UM-5af"/>
+                <constraint firstItem="0zg-jj-i3V" firstAttribute="top" secondItem="K1l-Zd-Qcj" secondAttribute="bottom" constant="38.329999999999998" id="aWk-E5-vca"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="K1l-Zd-Qcj" secondAttribute="trailing" constant="15" id="eCd-6q-phn"/>
                 <constraint firstItem="K1l-Zd-Qcj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="60" id="eYS-W8-40J"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wfU-DT-Yd6" secondAttribute="trailing" constant="10" id="kMW-Lc-IcU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="0zg-jj-i3V" secondAttribute="bottom" constant="16" id="lFa-UL-ALl"/>
                 <constraint firstItem="K1l-Zd-Qcj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="vYK-iI-px5"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
