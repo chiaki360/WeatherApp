@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="WeatherApp" customModuleProvider="target">
             <connections>
                 <outlet property="cityNameLabel" destination="wfU-DT-Yd6" id="INr-SJ-buJ"/>
-                <outlet property="hScrollView" destination="0zg-jj-i3V" id="XIO-RC-9AL"/>
+                <outlet property="collectionVIew" destination="UiJ-Lh-HnI" id="yTx-w1-iCA"/>
                 <outlet property="humidityLabel" destination="VWb-5g-kBU" id="RDm-a4-F2L"/>
                 <outlet property="pressureLabel" destination="Ab0-nN-2nB" id="Kdz-si-WTZ"/>
                 <outlet property="tempLabel" destination="jN8-sc-RP7" id="9Aw-0p-kcT"/>
@@ -92,23 +92,28 @@
                         </stackView>
                     </subviews>
                 </stackView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zg-jj-i3V">
-                    <rect key="frame" x="16" y="295" width="344" height="304"/>
-                    <viewLayoutGuide key="contentLayoutGuide" id="LZN-w5-8v7"/>
-                    <viewLayoutGuide key="frameLayoutGuide" id="HzD-SI-i1X"/>
-                </scrollView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UiJ-Lh-HnI">
+                    <rect key="frame" x="10" y="276.66666666666674" width="355" height="486.33333333333326"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pS2-p3-wzB">
+                        <size key="itemSize" width="300" height="230"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="0zg-jj-i3V" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="QH6-xq-Lsz"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UiJ-Lh-HnI" secondAttribute="trailing" constant="10" id="M9w-uW-P08"/>
                 <constraint firstItem="wfU-DT-Yd6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="SlV-FU-VRw"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0zg-jj-i3V" secondAttribute="trailing" constant="15" id="Ubk-os-Qe3"/>
+                <constraint firstItem="UiJ-Lh-HnI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="TWk-4J-ech"/>
                 <constraint firstItem="wfU-DT-Yd6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="Zsc-UM-5af"/>
-                <constraint firstItem="0zg-jj-i3V" firstAttribute="top" secondItem="K1l-Zd-Qcj" secondAttribute="bottom" constant="38.329999999999998" id="aWk-E5-vca"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="K1l-Zd-Qcj" secondAttribute="trailing" constant="15" id="eCd-6q-phn"/>
                 <constraint firstItem="K1l-Zd-Qcj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="60" id="eYS-W8-40J"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wfU-DT-Yd6" secondAttribute="trailing" constant="10" id="kMW-Lc-IcU"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="0zg-jj-i3V" secondAttribute="bottom" constant="16" id="lFa-UL-ALl"/>
+                <constraint firstItem="UiJ-Lh-HnI" firstAttribute="top" secondItem="K1l-Zd-Qcj" secondAttribute="bottom" constant="20" id="s5L-3S-Kl5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="UiJ-Lh-HnI" secondAttribute="bottom" constant="15" id="tnw-sd-d2t"/>
                 <constraint firstItem="K1l-Zd-Qcj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="vYK-iI-px5"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

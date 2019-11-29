@@ -8,7 +8,16 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        return cell
+    }
+    
     
     @IBOutlet weak var cityNameLabel: UILabel!
     
@@ -20,12 +29,19 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var humidityLabel: UILabel!
     
+    @IBOutlet var collectionVIew: UICollectionView!
+    
     
     @IBOutlet weak var hScrollView: UIScrollView!
     var city : City?
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionVIew.dataSource = self
+        collectionVIew.delegate = self
+        
+        collectionVIew.register(UINib(nibName: "WeatherViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
+        /*
         cityNameLabel.text = city?.name
         let urlString = "https://api.openweathermap.org/data/2.5/weather?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
         print(urlString)
@@ -137,11 +153,16 @@ class DetailViewController: UIViewController {
             label.text = "\(i)."
             label.textAlignment = .center
  */
-            let weatherView3hr = WeatherView3hr()
-            stackView.addArrangedSubview(weatherView3hr)
+//            let weatherView3hr = WeatherView3hr()
+//            weatherView3hr.frame = CGRect(x: 0, y: 0, width: weatherView3hr.frame.width, height: stackView.frame.height)
+//            stackView.addArrangedSubview(weatherView3hr)
+            let weatherViewCell = WeatherViewCell()
+            weatherViewCell.frame = CGRect(x: 0, y: 0, width: weatherViewCell.frame.width, height: stackView.frame.height)
+            stackView.addArrangedSubview(weatherViewCell)
         }
         
         // Do any additional setup after loading the view.
+ */
     }
     
     /*
