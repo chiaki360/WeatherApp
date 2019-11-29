@@ -28,7 +28,7 @@ class WeatherView3hr: UIView {
         Bundle.main.loadNibNamed(kCONTENT_XIB_NAME, owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
-        //contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
 
 }

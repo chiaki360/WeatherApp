@@ -103,6 +103,8 @@
                 <constraint firstItem="OWg-YO-bVD" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="48" id="RQ8-yg-Bkj"/>
                 <constraint firstItem="dC8-sf-wsP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="keP-gt-2nb"/>
             </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="109.59999999999999" y="0.0"/>
