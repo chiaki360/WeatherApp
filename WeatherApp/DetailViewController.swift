@@ -131,11 +131,14 @@ class DetailViewController: UIViewController {
         for i in 0...20 {
             
             // Label (has instrinsic content size)
+            /*
             let label = UILabel()
             label.backgroundColor = .orange
             label.text = "\(i)."
             label.textAlignment = .center
-            stackView.addArrangedSubview(label)
+ */
+            let weatherView3hr = WeatherView3hr()
+            stackView.addArrangedSubview(weatherView3hr)
         }
         
         // Do any additional setup after loading the view.
