@@ -98,6 +98,11 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="381" height="289"/>
+            <connections>
+                <outlet property="cellDate" destination="uwB-bl-Ohg" id="sBs-rm-N1A"/>
+                <outlet property="cellTemperature" destination="aBB-e9-1hN" id="QvZ-dk-uHM"/>
+                <outlet property="cellWeatherIcon" destination="DJb-K2-a0P" id="g9L-bM-81x"/>
+            </connections>
             <point key="canvasLocation" x="134.05797101449275" y="80.022321428571431"/>
         </collectionViewCell>
     </objects>

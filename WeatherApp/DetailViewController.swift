@@ -9,15 +9,6 @@
 import UIKit
 
 class DetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        return cell
-    }
-    
     
     @IBOutlet weak var cityNameLabel: UILabel!
     
@@ -34,6 +25,48 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     @IBOutlet weak var hScrollView: UIScrollView!
     var city : City?
+    var hourlyWeatherList : [List]?
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let list = hourlyWeatherList {
+            return list.count
+        }
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print(indexPath.row)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WeatherViewCell
+        if let list = hourlyWeatherList {
+            let currList = list[indexPath.row]
+            let currMain = currList.main
+            
+            let date = Date(timeIntervalSince1970: Double(currList.dt))
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
+            dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
+            dateFormatter.timeZone = .current
+            let localDate = dateFormatter.string(from: date)
+            //print(localDate)
+            
+            cell.cellDate.text = localDate
+            
+            cell.cellTemperature.text = String(format: "%.2f", currMain.temp-273.15)+" °C"
+
+            let iconname = currList.weather[0].icon+".png"
+            let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
+            do {
+                let data = try Data(contentsOf: url!)
+                cell.cellWeatherIcon.image = UIImage(data: data)
+                
+            } catch let err {
+                print("Error : \(err.localizedDescription)")
+            }
+        }
+        
+        return cell
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +74,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         collectionVIew.delegate = self
         
         collectionVIew.register(UINib(nibName: "WeatherViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-        /*
+        
         cityNameLabel.text = city?.name
         let urlString = "https://api.openweathermap.org/data/2.5/weather?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
         print(urlString)
@@ -49,12 +82,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             do {
                 if let data = try? Data(contentsOf: url) {
                     // parse(json: data)
-                    print(String(decoding: data, as: UTF8.self))
+                    //print(String(decoding: data, as: UTF8.self))
                     
                     let decoder = JSONDecoder()
                     
                     let currentWeather = try decoder.decode(CurrentWeather.self, from: data)
-                    print(currentWeather)
+                    //print(currentWeather)
                     tempLabel.text = String(format: "%.2f", currentWeather.main.temp-273.15)+" °C"
                     let iconname = currentWeather.weather[0].icon+".png"
                     
@@ -92,7 +125,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
                     let decoder = JSONDecoder()
                     
                     let hourlyWeather = try decoder.decode(HourlyWeather.self, from: data)
-                    print(hourlyWeather)
+                    hourlyWeatherList = hourlyWeather.list
+                    //print(hourlyWeather)
+                    //print(hourlyWeatherList.count)
                     /*
                      tempLabel.text = String(format: "%.2f", hourlyWeather.main.temp-273.15)+" °C"
                      let iconname = hourlyWeather.weather[0].icon+".png"
@@ -120,49 +155,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             showError()
         }
         
-        NSLayoutConstraint.activate([
-            hScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            hScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            
-        ])
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.spacing = 10
-        stackView.distribution = .fill
-        hScrollView.addSubview(stackView)
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            // Attaching the content's edges to the scroll view's edges
-            stackView.leadingAnchor.constraint(equalTo: hScrollView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: hScrollView.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: hScrollView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: hScrollView.bottomAnchor),
-            
-            // Satisfying size constraints
-            
-            stackView.heightAnchor.constraint(equalTo: hScrollView.heightAnchor)
-        ])
-        for i in 0...20 {
-            
-            // Label (has instrinsic content size)
-            /*
-            let label = UILabel()
-            label.backgroundColor = .orange
-            label.text = "\(i)."
-            label.textAlignment = .center
- */
-//            let weatherView3hr = WeatherView3hr()
-//            weatherView3hr.frame = CGRect(x: 0, y: 0, width: weatherView3hr.frame.width, height: stackView.frame.height)
-//            stackView.addArrangedSubview(weatherView3hr)
-            let weatherViewCell = WeatherViewCell()
-            weatherViewCell.frame = CGRect(x: 0, y: 0, width: weatherViewCell.frame.width, height: stackView.frame.height)
-            stackView.addArrangedSubview(weatherViewCell)
-        }
-        
         // Do any additional setup after loading the view.
- */
     }
     
     /*
