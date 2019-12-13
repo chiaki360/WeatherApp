@@ -41,8 +41,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             let date = Date(timeIntervalSince1970: Double(currList.dt))
             let dateFormatter = DateFormatter()
-            dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
-            dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
+            dateFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
             dateFormatter.timeZone = .current
             let localDate = dateFormatter.string(from: date)
             cell.cellDate.text = localDate
