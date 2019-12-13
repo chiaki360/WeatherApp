@@ -23,6 +23,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet var collectionVIew: UICollectionView!
     
     var city : City?
+    
+    var coord : Coord?
+    
     var hourlyWeatherList : [List]?
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -74,8 +77,13 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         collectionVIew.register(UINib(nibName: "WeatherViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         
-        cityNameLabel.text = city?.name
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        var urlString: String!
+        if let _ = city {
+            urlString = "https://api.openweathermap.org/data/2.5/weather?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        }
+        if let _ = coord {
+            urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(coord?.lat ?? 0)&lon=\(coord?.lon ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        }
         
         if let url = URL(string: urlString) {
             do {
@@ -83,6 +91,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
                     let decoder = JSONDecoder()
                     
                     let currentWeather = try decoder.decode(CurrentWeather.self, from: data)
+                    cityNameLabel.text = currentWeather.name
                     tempLabel.text = String(format: "%.2f", currentWeather.main.temp-273.15)+" °C"
                     let iconname = currentWeather.weather[0].icon+".png"
                     
@@ -109,7 +118,13 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             showError()
         }
         
-        let urlString1 = "https://api.openweathermap.org/data/2.5/forecast?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        var urlString1: String!
+        if let _ = city {
+            urlString1 = "https://api.openweathermap.org/data/2.5/forecast?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        }
+        if let _ = coord {
+            urlString1 = "https://api.openweathermap.org/data/2.5/forecast?lat=\(coord?.lat ?? 0)&lon=\(coord?.lon ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        }
         
         if let url = URL(string: urlString1) {
             do {

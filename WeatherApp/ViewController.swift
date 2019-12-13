@@ -11,13 +11,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
-    //var cityDictionary = ["Japan": ["Tokyo","Osaka","Kyoto", "Sapporo", "Kusatsu"],
-    //                      "China": ["Beijing","Shanghai","Shenzhen","Dalian","Nanjing"],
-    //                      "South Korea": ["Seoul","Busan","Jeju"],
-    //                      "Indonesia": ["Jakarta","Semarang","Bali"],
-    //                      "Malaysia": ["Kuala Lumpur","Putra Jaya","Ipoh","Shah Alam","Kucing"]]
-    
+class ViewController: UITableViewController{
     var countryDict = [String:[City]]()
     var countries = [String]()
     var countriesCodeDict = [String:String]()
@@ -32,7 +26,7 @@ class ViewController: UITableViewController {
       return searchController.isActive && !isSearchBarEmpty
     }
     let searchController = UISearchController(searchResultsController: nil)
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,27 +34,20 @@ class ViewController: UITableViewController {
         print("Try to read cities from Json file.")
         readCountry()
         readCities()
-        //let items = ["Japan","China","South Korea", "Indonesia", "Malaysia"]
-        //let items = cityDictionary.keys
+        
         let items = countryDict.keys
         for item in items.sorted() {
             countries.append(item)
         }
-        //print(countries)
-        
-        // 1
         searchController.searchResultsUpdater = self
-        // 2
         searchController.obscuresBackgroundDuringPresentation = false
-        // 3
         searchController.searchBar.placeholder = "Search Countries"
-        // 4
+
         navigationItem.searchController = searchController
-        // 5
         definesPresentationContext = true
         
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
           return filteredCountries.count
@@ -85,8 +72,7 @@ class ViewController: UITableViewController {
         print("Creating CityTableView")
         if let vc = storyboard?.instantiateViewController(withIdentifier: "City") as? CityTableViewController {
             print("CityTableView created.")
-            //vc.detailItem = petitions[indexPath.row]
-            //let cityList = cityDictionary[countries[indexPath.row]]!
+            
             let country: String
             if isFiltering {
                 country = filteredCountries[indexPath.row]
@@ -95,10 +81,6 @@ class ViewController: UITableViewController {
             }
             let cityList = countryDict[country]
             vc.cities = cityList!.sorted(by: {$0.name < $1.name})
-            // 2: success! Set its selectedImage property
-            //vc.selectedImage = countries[indexPath.row]
-            
-            // 3: now push it onto the navigation controller
             navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ENn-79-NiX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ENn-79-NiX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -82,11 +82,11 @@
             </objects>
             <point key="canvasLocation" x="2635" y="124"/>
         </scene>
-        <!--Item-->
+        <!--Countries-->
         <scene sceneID="zKw-xg-K5W">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FhR-Iv-WiS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="qrU-h5-jLL"/>
+                <navigationController storyboardIdentifier="NavController" automaticallyAdjustsScrollViewInsets="NO" id="FhR-Iv-WiS" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Countries" image="square.stack.3d.up.fill" catalog="system" id="qrU-h5-jLL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="e9a-5z-Nbc">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -120,4 +120,7 @@
             <point key="canvasLocation" x="-107.24637681159422" y="121.875"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="square.stack.3d.up.fill" catalog="system" width="64" height="62"/>
+    </resources>
 </document>
