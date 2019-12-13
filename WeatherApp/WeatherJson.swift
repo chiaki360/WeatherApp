@@ -30,7 +30,6 @@ struct Main: Codable {
 
 struct HourlyWeather: Codable {
     var list: [List]
-    
 }
 
 struct List: Codable {

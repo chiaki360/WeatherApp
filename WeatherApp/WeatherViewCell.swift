@@ -16,9 +16,12 @@ class WeatherViewCell: UICollectionViewCell {
     
     @IBOutlet weak var cellTemperature: UILabel!
     
+    @IBOutlet weak var cellPressure: UILabel!
+    
+    @IBOutlet weak var cellHumidity: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
 }

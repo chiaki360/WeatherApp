@@ -104,21 +104,15 @@ class ViewController: UITableViewController {
     }
 
     func readCities() {
-        print("readCities: Begin")
         if let path = Bundle.main.path(forResource: "current.city.list", ofType: "json") {
-            print("Loading json file.")
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                print("Creating data.")
                 let decoder = JSONDecoder()
                 
                 let jsonCities = try decoder.decode([City].self, from: data)
-                print("Decoing data.")
                 let cities = jsonCities
-                print("Numbr of cities = ", cities.count)
                 
                 for city in cities {
-                    //print("Country:",city.country)
                     var countryName = countriesCodeDict[city.country]
                     if countryName == nil {
                         countryName = city.country
@@ -137,29 +131,20 @@ class ViewController: UITableViewController {
                 print(error)
             }
         }
-        print("readCities: End")
     }
     
     func readCountry() {
-        print("readCountries: Begin")
         if let path = Bundle.main.path(forResource: "ISO3166-1.alpha2", ofType: "json") {
-            print("Loading json file.")
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                print("Creating data.")
                 let decoder = JSONDecoder()
                 
                 let jsonCountries = try decoder.decode([String:String].self, from: data)
-                print("Decoing data.")
                 countriesCodeDict = jsonCountries
-                print("Number of countries = ", countriesCodeDict.count)
-                //print(countriesCodeDict)
-                
             } catch let error {
                 print(error)
             }
         }
-        print("readCountries: End")
     }
 
     func filterContentForSearchText(_ searchText: String) {

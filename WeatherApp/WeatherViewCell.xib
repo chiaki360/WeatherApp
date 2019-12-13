@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -100,6 +100,8 @@
             <size key="customSize" width="381" height="289"/>
             <connections>
                 <outlet property="cellDate" destination="uwB-bl-Ohg" id="sBs-rm-N1A"/>
+                <outlet property="cellHumidity" destination="66y-II-LLt" id="cXq-jx-Rm5"/>
+                <outlet property="cellPressure" destination="PE4-uG-30k" id="aFZ-Up-vXw"/>
                 <outlet property="cellTemperature" destination="aBB-e9-1hN" id="QvZ-dk-uHM"/>
                 <outlet property="cellWeatherIcon" destination="DJb-K2-a0P" id="g9L-bM-81x"/>
             </connections>
