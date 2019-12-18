@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     var window: UIWindow?
     let locationManager = CLLocationManager()
-    
+    var vc: DetailViewController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -31,25 +31,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
         }
         
-   
+        if let tabBarController = window?.rootViewController as? UITabBarController {
+            vc = DetailViewController(nibName: "DetailViewController", bundle: nil)
+            vc?.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
+            tabBarController.viewControllers?.append(vc!)
+        }
         
         return true
     }
     
-    var button = false
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        if button == true {
-            return
-        }
-        if let tabBarController = window?.rootViewController as? UITabBarController {
-            let vc = DetailViewController(nibName: "DetailViewController", bundle: nil)
-            vc.coord = Coord(lon: Float(locValue.longitude), lat: Float(locValue.latitude))
-            vc.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
-            tabBarController.viewControllers?.append(vc)
-            button = true
-        }
+        vc?.coord = Coord(lon: Float(locValue.longitude), lat: Float(locValue.latitude))
+        print("locations = \(locValue.latitude) \(locValue.longitude)")        
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

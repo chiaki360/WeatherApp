@@ -28,6 +28,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var hourlyWeatherList : [List]?
     
+    var activityIndicatorView = UIActivityIndicatorView()
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let list = hourlyWeatherList {
             return list.count
@@ -72,6 +74,14 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activityIndicatorView.center = view.center
+        activityIndicatorView.style = .whiteLarge
+        activityIndicatorView.color = .purple
+
+        view.addSubview(activityIndicatorView)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         collectionVIew.dataSource = self
         collectionVIew.delegate = self
         
@@ -84,8 +94,15 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         if let _ = coord {
             urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(coord?.lat ?? 0)&lon=\(coord?.lon ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
         }
+        guard let _ = urlString else {
+            showError()
+            return
+            
+        }
+        activityIndicatorView.startAnimating()
         
         if let url = URL(string: urlString) {
+
             do {
                 if let data = try? Data(contentsOf: url) {
                     let decoder = JSONDecoder()
@@ -144,6 +161,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         } else {
             showError()
         }
+        activityIndicatorView.stopAnimating()
     }
     
     func showError() {
