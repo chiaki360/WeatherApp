@@ -74,14 +74,15 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicatorView.center = view.center
+        //activityIndicatorView.center = view.center
         activityIndicatorView.style = .whiteLarge
-        activityIndicatorView.color = .purple
+        activityIndicatorView.color = .blue
         
         view.addSubview(activityIndicatorView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        activityIndicatorView.center = view.center
         collectionVIew.dataSource = self
         collectionVIew.delegate = self
         
