@@ -52,7 +52,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             cell.cellDate.text = localDate
             
             cell.cellTemperature.text = String(format: "%.2f", currMain.temp-273.15)+" °C"
-
+            
             cell.cellPressure.text = String(currMain.pressure) + " hPa"
             
             cell.cellHumidity.text = String(currMain.humidity) + " %"
@@ -77,7 +77,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         activityIndicatorView.center = view.center
         activityIndicatorView.style = .whiteLarge
         activityIndicatorView.color = .purple
-
+        
         view.addSubview(activityIndicatorView)
     }
     
@@ -101,72 +101,85 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         activityIndicatorView.startAnimating()
         
-        if let url = URL(string: urlString) {
-
-            do {
-                if let data = try? Data(contentsOf: url) {
-                    let decoder = JSONDecoder()
-                    
-                    let currentWeather = try decoder.decode(CurrentWeather.self, from: data)
-                    cityNameLabel.text = currentWeather.name
-                    tempLabel.text = String(format: "%.2f", currentWeather.main.temp-273.15)+" °C"
-                    let iconname = currentWeather.weather[0].icon+".png"
-                    
-                    let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
-                    do {
-                        let data = try Data(contentsOf: url!)
-                        weathericon.image = UIImage(data: data)
+        var currentWeather : CurrentWeather?
+        // Starting a new thread for download data and parsing.
+        DispatchQueue.global().async {
+            
+            if let url = URL(string: urlString) {
+                
+                do {
+                    if let data = try? Data(contentsOf: url) {
+                        let decoder = JSONDecoder()
                         
-                    } catch let err {
-                        print("Error : \(err.localizedDescription)")
+                        currentWeather = try decoder.decode(CurrentWeather.self, from: data)
+                        
+                    } else {
+                        self.showError()
                     }
-                    
-                    pressureLabel.text = String(currentWeather.main.pressure) + " hPa"
-                    
-                    humidityLabel.text = String(currentWeather.main.humidity) + " %"
-                    
-                } else {
-                    showError()
+                } catch let error {
+                    print(error)
                 }
-            } catch let error {
-                print(error)
+            } else {
+                self.showError()
             }
-        } else {
-            showError()
-        }
-        
-        var urlString1: String!
-        if let _ = city {
-            urlString1 = "https://api.openweathermap.org/data/2.5/forecast?id=\(city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
-        }
-        if let _ = coord {
-            urlString1 = "https://api.openweathermap.org/data/2.5/forecast?lat=\(coord?.lat ?? 0)&lon=\(coord?.lon ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
-        }
-        
-        if let url = URL(string: urlString1) {
-            do {
-                if let data = try? Data(contentsOf: url) {
-                    print(String(decoding: data, as: UTF8.self))
-                    
-                    let decoder = JSONDecoder()
-                    
-                    let hourlyWeather = try decoder.decode(HourlyWeather.self, from: data)
-                    hourlyWeatherList = hourlyWeather.list
-                } else {
-                    showError()
+            
+            var urlString1: String!
+            if let _ = self.city {
+                urlString1 = "https://api.openweathermap.org/data/2.5/forecast?id=\(self.city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+            }
+            if let _ = self.coord {
+                urlString1 = "https://api.openweathermap.org/data/2.5/forecast?lat=\(self.coord?.lat ?? 0)&lon=\(self.coord?.lon ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+            }
+            
+            var hourlyWeather : HourlyWeather?
+            if let url = URL(string: urlString1) {
+                do {
+                    if let data = try? Data(contentsOf: url) {
+                        print(String(decoding: data, as: UTF8.self))
+                        
+                        let decoder = JSONDecoder()
+                        
+                        hourlyWeather = try decoder.decode(HourlyWeather.self, from: data)
+                        //self.hourlyWeatherList = hourlyWeather.list
+                    } else {
+                        self.showError()
+                    }
+                } catch let error {
+                    print(error)
                 }
-            } catch let error {
-                print(error)
+            } else {
+                self.showError()
             }
-        } else {
-            showError()
+
+            DispatchQueue.main.async {
+                self.activityIndicatorView.stopAnimating()
+                self.cityNameLabel.text = currentWeather?.name
+                self.tempLabel.text = String(format: "%.2f", (currentWeather?.main.temp)!-273.15)+" °C"
+                let iconname = (currentWeather?.weather[0].icon)!+".png"
+                let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
+                do {
+                    let data = try Data(contentsOf: url!)
+                    self.weathericon.image = UIImage(data: data)
+                    
+                } catch let err {
+                    print("Error : \(err.localizedDescription)")
+                }
+                self.pressureLabel.text = String(currentWeather!.main.pressure) + " hPa"
+                self.humidityLabel.text = String(currentWeather!.main.humidity) + " %"
+
+                // 3 Hourly data
+                self.hourlyWeatherList = hourlyWeather?.list
+                // Need to reload 3 hourly data to display.
+                self.collectionVIew.reloadData()
+            }
         }
-        activityIndicatorView.stopAnimating()
     }
     
     func showError() {
-        let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
-        present(ac, animated: true)
+        DispatchQueue.main.async {
+            let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(ac, animated: true)
+        }
     }
 }

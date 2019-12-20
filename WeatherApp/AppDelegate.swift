@@ -33,7 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         if let tabBarController = window?.rootViewController as? UITabBarController {
             vc = DetailViewController(nibName: "DetailViewController", bundle: nil)
-            vc?.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
+            if #available(iOS 13.0, *) {
+                let btnIcon = UIImage(systemName: "icloud.fill")
+                vc?.tabBarItem = UITabBarItem(title: "Local Weather", image: btnIcon, tag: 1)
+            } else {
+                vc?.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
+            }
             tabBarController.viewControllers?.append(vc!)
         }
         
