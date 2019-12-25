@@ -151,23 +151,24 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             } else {
                 self.showError()
             }
-
+            
             DispatchQueue.main.async {
                 self.activityIndicatorView.stopAnimating()
-                self.cityNameLabel.text = currentWeather?.name
-                self.tempLabel.text = String(format: "%.2f", (currentWeather?.main.temp)!-273.15)+" °C"
-                let iconname = (currentWeather?.weather[0].icon)!+".png"
-                let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
-                do {
-                    let data = try Data(contentsOf: url!)
-                    self.weathericon.image = UIImage(data: data)
-                    
-                } catch let err {
-                    print("Error : \(err.localizedDescription)")
+                if let cw = currentWeather {
+                    self.cityNameLabel.text = cw.name
+                    self.tempLabel.text = String(format: "%.2f", cw.main.temp-273.15)+" °C"
+                    let iconname = cw.weather[0].icon+".png"
+                    let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
+                    do {
+                        let data = try Data(contentsOf: url!)
+                        self.weathericon.image = UIImage(data: data)
+                        
+                    } catch let err {
+                        print("Error : \(err.localizedDescription)")
+                    }
+                    self.pressureLabel.text = String(cw.main.pressure) + " hPa"
+                    self.humidityLabel.text = String(cw.main.humidity) + " %"
                 }
-                self.pressureLabel.text = String(currentWeather!.main.pressure) + " hPa"
-                self.humidityLabel.text = String(currentWeather!.main.humidity) + " %"
-
                 // 3 Hourly data
                 self.hourlyWeatherList = hourlyWeather?.list
                 // Need to reload 3 hourly data to display.
