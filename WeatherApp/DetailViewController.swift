@@ -57,12 +57,17 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             cell.cellHumidity.text = String(currMain.humidity) + " %"
             
             let iconname = currList.weather[0].icon+".png"
-            let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
-            do {
-                let data = try Data(contentsOf: url!)
-                cell.cellWeatherIcon.image = UIImage(data: data)
-            } catch let err {
-                print("Error : \(err.localizedDescription)")
+            // Make the scrolling smoother by starting a thread in the background to load the icons
+            DispatchQueue.global().async {
+                let url = URL(string: "https://openweathermap.org/img/wn/"+iconname)
+                do {
+                    let data = try Data(contentsOf: url!)
+                    DispatchQueue.main.async {
+                        cell.cellWeatherIcon.image = UIImage(data: data)
+                    }
+                } catch let err {
+                    print("Error : \(err.localizedDescription)")
+                }
             }
         }
         return cell
