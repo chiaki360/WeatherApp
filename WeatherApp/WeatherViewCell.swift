@@ -8,6 +8,7 @@
 
 import UIKit
 
+// This is the cell for the 3 hourly view.
 class WeatherViewCell: UICollectionViewCell {
 
     @IBOutlet weak var cellWeatherIcon: UIImageView!

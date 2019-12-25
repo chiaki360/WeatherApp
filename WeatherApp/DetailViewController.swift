@@ -37,8 +37,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         return 0
     }
     
+    // This will construct the 3 hourly forecast view for 5 days
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(indexPath.row)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WeatherViewCell
         if let list = hourlyWeatherList {
             let currList = list[indexPath.row]
@@ -48,8 +48,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
             dateFormatter.timeZone = .current
-            let localDate = dateFormatter.string(from: date)
-            cell.cellDate.text = localDate
+            cell.cellDate.text = dateFormatter.string(from: date)
             
             cell.cellTemperature.text = String(format: "%.2f", currMain.temp-273.15)+" °C"
             
@@ -62,25 +61,26 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             do {
                 let data = try Data(contentsOf: url!)
                 cell.cellWeatherIcon.image = UIImage(data: data)
-                
             } catch let err {
                 print("Error : \(err.localizedDescription)")
             }
         }
-        
         return cell
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //activityIndicatorView.center = view.center
+        // Set parameter for the loading indicator icon
         activityIndicatorView.style = .whiteLarge
         activityIndicatorView.color = .blue
         
         view.addSubview(activityIndicatorView)
     }
     
+    // This function make sure that data is loaded before the loading icon animation
+    // is stopped, by running two threads together. One for animating the icon and the
+    // other to load the data.
     override func viewDidAppear(_ animated: Bool) {
         activityIndicatorView.center = view.center
         collectionVIew.dataSource = self
@@ -98,8 +98,17 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         guard let _ = urlString else {
             showError()
             return
-            
         }
+        
+        var urlString1: String!
+        if let _ = self.city {
+            urlString1 = "https://api.openweathermap.org/data/2.5/forecast?id=\(self.city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        }
+        if let _ = self.coord {
+            urlString1 = "https://api.openweathermap.org/data/2.5/forecast?lat=\(self.coord?.lat ?? 0)&lon=\(self.coord?.lon ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
+        }
+
+        // Loading icon animation started.
         activityIndicatorView.startAnimating()
         
         var currentWeather : CurrentWeather?
@@ -107,7 +116,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
         DispatchQueue.global().async {
             
             if let url = URL(string: urlString) {
-                
                 do {
                     if let data = try? Data(contentsOf: url) {
                         let decoder = JSONDecoder()
@@ -123,15 +131,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             } else {
                 self.showError()
             }
-            
-            var urlString1: String!
-            if let _ = self.city {
-                urlString1 = "https://api.openweathermap.org/data/2.5/forecast?id=\(self.city?.id ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
-            }
-            if let _ = self.coord {
-                urlString1 = "https://api.openweathermap.org/data/2.5/forecast?lat=\(self.coord?.lat ?? 0)&lon=\(self.coord?.lon ?? 0)&appid=cd722cdfdd876581cbab1c54072fe755"
-            }
-            
+                        
             var hourlyWeather : HourlyWeather?
             if let url = URL(string: urlString1) {
                 do {
@@ -152,8 +152,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.showError()
             }
             
+            // Merging threads
             DispatchQueue.main.async {
+                // Loading icon animation stopped.
                 self.activityIndicatorView.stopAnimating()
+                
+                // Condition to prevent crash when wifi is not avilable.
                 if let cw = currentWeather {
                     self.cityNameLabel.text = cw.name
                     self.tempLabel.text = String(format: "%.2f", cw.main.temp-273.15)+" °C"
@@ -162,7 +166,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
                     do {
                         let data = try Data(contentsOf: url!)
                         self.weathericon.image = UIImage(data: data)
-                        
                     } catch let err {
                         print("Error : \(err.localizedDescription)")
                     }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// This view displays the city list
+
 class CityTableViewController: UITableViewController {
     var cities = [City]()
     
@@ -52,6 +54,7 @@ class CityTableViewController: UITableViewController {
         return cell
     }
     
+    // This will load the detail view controller
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailViewController = DetailViewController(nibName: "DetailViewController", bundle: nil)
         let city: City
@@ -68,7 +71,6 @@ class CityTableViewController: UITableViewController {
         filteredCities = cities.filter { (city: City) -> Bool in
             return city.name.lowercased().contains(searchText.lowercased())
         }
-        
         tableView.reloadData()
     }
 }

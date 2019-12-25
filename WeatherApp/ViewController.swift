@@ -15,23 +15,22 @@ class ViewController: UITableViewController{
     var countryDict = [String:[City]]()
     var countries = [String]()
     var countriesCodeDict = [String:String]()
-
+    
     var filteredCountries: [String] = []
-
+    
     var isSearchBarEmpty: Bool {
-      return searchController.searchBar.text?.isEmpty ?? true
+        return searchController.searchBar.text?.isEmpty ?? true
     }
     
     var isFiltering: Bool {
-      return searchController.isActive && !isSearchBarEmpty
+        return searchController.isActive && !isSearchBarEmpty
     }
     let searchController = UISearchController(searchResultsController: nil)
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        print("Try to read cities from Json file.")
+        // Loading country and city list from JSon file.
         readCountry()
         readCities()
         
@@ -42,15 +41,15 @@ class ViewController: UITableViewController{
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Countries"
-
+        
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // When doing a search base on country.
         if isFiltering {
-          return filteredCountries.count
+            return filteredCountries.count
         }
         return countries.count
     }
@@ -68,31 +67,29 @@ class ViewController: UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 1: try loading the "Detail" view controller and typecasting it to be DetailViewController
-        print("Creating CityTableView")
+        let country: String
+        
         if let vc = storyboard?.instantiateViewController(withIdentifier: "City") as? CityTableViewController {
-            print("CityTableView created.")
-            
-            let country: String
             if isFiltering {
                 country = filteredCountries[indexPath.row]
             } else {
                 country = countries[indexPath.row]
             }
+            // Creating city list
             let cityList = countryDict[country]
+            // Sorted by city name in alphabatical order
             vc.cities = cityList!.sorted(by: {$0.name < $1.name})
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-
+    
     func readCities() {
         if let path = Bundle.main.path(forResource: "current.city.list", ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 let decoder = JSONDecoder()
                 
-                let jsonCities = try decoder.decode([City].self, from: data)
-                let cities = jsonCities
+                let cities = try decoder.decode([City].self, from: data)
                 
                 for city in cities {
                     var countryName = countriesCodeDict[city.country]
@@ -107,7 +104,6 @@ class ViewController: UITableViewController{
                         countryDict.updateValue(cityArr!, forKey: countryName!)
                     }
                 }
-                
                 tableView.reloadData()
             } catch let error {
                 print(error)
@@ -121,26 +117,25 @@ class ViewController: UITableViewController{
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 let decoder = JSONDecoder()
                 
-                let jsonCountries = try decoder.decode([String:String].self, from: data)
-                countriesCodeDict = jsonCountries
+                countriesCodeDict = try decoder.decode([String:String].self, from: data)
             } catch let error {
                 print(error)
             }
         }
     }
-
+    
     func filterContentForSearchText(_ searchText: String) {
-      filteredCountries = countries.filter { (country: String) -> Bool in
-        return country.lowercased().contains(searchText.lowercased())
-      }
-      
-      tableView.reloadData()
+        filteredCountries = countries.filter { (country: String) -> Bool in
+            return country.lowercased().contains(searchText.lowercased())
+        }
+        
+        tableView.reloadData()
     }
 }
 
 extension ViewController: UISearchResultsUpdating {
-  func updateSearchResults(for searchController: UISearchController) {
-    let searchBar = searchController.searchBar
-    filterContentForSearchText(searchBar.text!)
-  }
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        filterContentForSearchText(searchBar.text!)
+    }
 }
